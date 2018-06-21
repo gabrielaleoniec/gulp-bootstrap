@@ -11,6 +11,7 @@
         "gulp": "^3.9.1",
         "gulp-autoprefixer": "^5.0.0",
         "gulp-eslint": "^4.0.2",
+        "gulp-inject": "^4.3.2",
         "gulp-print": "^5.0.0",
         "gulp-sass": "^4.0.1",
         "gulp-sass-lint": "^1.4.0",

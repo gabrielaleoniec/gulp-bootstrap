@@ -11,6 +11,7 @@ var eslint = require('gulp-eslint');
 var print = require('gulp-print').default;
 var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps = require('gulp-sourcemaps');
+var inject = require("gulp-inject");
 // TODO: var sassdoc = require('sassdoc');
 var fs = require('fs');
 
@@ -18,6 +19,8 @@ var dir = './public/assets/';
 var dir_css = dir + 'css/';
 var dir_sass = dir + 'sass/';
 var dir_js = dir + 'js/';
+var dir_maps = dir + 'maps/';
+var dir_html = './public/';
 
 fs.lstat(dir, (err) => {
   if (err)
@@ -70,13 +73,16 @@ gulp.task('lint', function () {
 });
 
 gulp.task('sass', ['sasslint'], function () {
-  return gulp.src(dir_sass + '*.s+(a|c)ss')
+  return gulp.src([
+            dir_sass + '*.s+(a|c)ss',
+            '!' + dir_sass + '/**/_*/'
+          ])
           .pipe(print())
-          .pipe(sourcemaps.init())
+          //.pipe(sourcemaps.init())
           .pipe(sass({
-            outputStyle: 'compact' // Options: nested, expanded, compact, compressed
+            outputStyle: 'compressed' // Options: nested, expanded, compact, compressed
           }).on('error', sass.logError))
-          .pipe(sourcemaps.write())
+          //.pipe(sourcemaps.write('../maps'))
           .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
@@ -88,6 +94,18 @@ gulp.task('sass:watch', function () {
   gulp.watch(dir_sass + '**/*.s+(a|c)ss', ['sass']);
 });
 
-gulp.task('default', ['sass', 'lint'], function () {
+gulp.task('inject', ['sass'], function () {
+  gulp.src(dir_html + '*.html')
+          .pipe(inject(gulp.src([dir_css + './critical.css']), {
+            starttag: '<!-- inject:head:{{ext}} --><style>',
+            endtag: '</style><!-- endinject -->',
+            transform: function (filePath, file) {
+              // return file contents as string
+              return file.contents.toString('utf8').trim();
+            }
+          }))
+          .pipe(gulp.dest(dir_html));
+});
 
+gulp.task('default', ['inject', 'lint'], function () {
 });
