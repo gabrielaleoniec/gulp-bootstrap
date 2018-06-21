@@ -1,0 +1,32 @@
+{
+    "name": "booking-conversion-suite",
+    "description": "NodeJs web application to copy booking.com data to bookassist smart + ibe",
+    "version": "0.0.1",
+    "private": true,
+    "devDependencies": {
+        "babel-eslint": "^8.2.3",
+        "eslint": "^4.19.1",
+        "eslint-config-airbnb-es5": "^1.2.0",
+        "eslint-plugin-react": "^7.9.1",
+        "gulp": "^3.9.1",
+        "gulp-autoprefixer": "^5.0.0",
+        "gulp-eslint": "^4.0.2",
+        "gulp-print": "^5.0.0",
+        "gulp-sass": "^4.0.1",
+        "gulp-sass-lint": "^1.4.0",
+        "gulp-sourcemaps": "^2.6.4",
+        "sass-lint-auto-fix": "^0.11.0",
+        "sassdoc": "^2.5.0"
+    },
+    "scripts": {
+        "test": "mocha --recursive tests",
+        "prettier": "prettier --write index.js",
+        "clean": "rimraf dist/$npm_package_version",
+        "gulp": "./node_modules/.bin/gulp"
+    },
+    "dependencies": {
+        "axios": "^0.18.0",
+        "nodemailer": "^4.6.5",
+        "qs": "^6.5.2"
+    }
+}
