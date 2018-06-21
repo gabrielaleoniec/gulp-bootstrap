@@ -1,6 +1,6 @@
 {
-    "name": "booking-conversion-suite",
-    "description": "NodeJs web application to copy booking.com data to bookassist smart + ibe",
+    "name": "GulpBoottstrap",
+    "description": "Gulp bootstrap",
     "version": "0.0.1",
     "private": true,
     "devDependencies": {
@@ -19,14 +19,6 @@
         "sassdoc": "^2.5.0"
     },
     "scripts": {
-        "test": "mocha --recursive tests",
-        "prettier": "prettier --write index.js",
-        "clean": "rimraf dist/$npm_package_version",
         "gulp": "./node_modules/.bin/gulp"
-    },
-    "dependencies": {
-        "axios": "^0.18.0",
-        "nodemailer": "^4.6.5",
-        "qs": "^6.5.2"
     }
 }
