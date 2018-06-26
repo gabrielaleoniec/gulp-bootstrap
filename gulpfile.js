@@ -15,12 +15,12 @@ var inject = require("gulp-inject");
 // TODO: var sassdoc = require('sassdoc');
 var fs = require('fs');
 
-var dir = './public/assets/';
+var dir = './public_html/assets/';
 var dir_css = dir + 'css/';
 var dir_sass = dir + 'sass/';
 var dir_js = dir + 'js/';
 var dir_maps = dir + 'maps/';
-var dir_html = './public/';
+var dir_html = './public_html/';
 
 fs.lstat(dir, (err) => {
   if (err)

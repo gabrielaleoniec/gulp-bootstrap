@@ -1,0 +1,19 @@
+@import '_includes';
+
+html,
+body {
+  // TODO: remove helper image
+  //background: url('/booking-conversion-suite/designs/a-login.png') no-repeat top center;
+  background-color: $color-light-grey;
+  color: $color-black;
+  font-family: 'Helvetica Neue', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 1em;
+  font-weight: 300;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.wrapper {
+  height: 100%;
+}

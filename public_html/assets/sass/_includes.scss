@@ -1,0 +1,59 @@
+$color-white: #fff;
+$color-black: #000;
+$color-blue: #0096d6; // Links
+$color-blue-small-text: #0074b4; //TODO: Ask David about the color
+
+$color-dark-blue: #2473ab;
+$color-dark-blue1: #0096d6;
+$color-navy: #1e528e;
+$color-blue-grey: #5b7983;
+$color-light-grey: #f3f3f3;
+$color-middle-grey: #b0b0b0; //TODO: Ask David about the color #656565;
+$color-fuchsia: #d70458;
+
+// Strips units from the given property value
+// @param {String|Integer} $num Property in pixels with or without 'px'
+// @return {Integer} Property without units
+@function strip-unit($num) {
+  @if $num > 0 {
+    @return $num / ($num * 0 + 1);
+  } @else {
+    @return $num;
+  }
+}
+
+// Pastes the given property in rems and px
+// @param {String} $property Property in pixels with or without 'px'
+// @param {String|Integer} $values List of properties in pixels with or without 'px'
+@mixin px-fallback($property, $values...) {
+  $max: length($values);
+  $px-values: '';
+  $rem-values: '';
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $rem-values: #{$rem-values + $value/16};
+    @if $value > 0 {
+      $rem-values: #{$rem-values}rem;
+    }
+
+    @if $i < $max {
+      $rem-values: #{$rem-values + ' '};
+    }
+  }
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $px-values: #{$px-values + $value};
+    @if $value > 0 {
+      $px-values: #{$px-values}px;
+    }
+
+    @if $i < $max {
+      $px-values: #{$px-values + ' '};
+    }
+  }
+
+  #{$property}: $px-values;
+  #{$property}: $rem-values;
+}
