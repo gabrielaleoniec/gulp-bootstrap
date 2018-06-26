@@ -15,12 +15,12 @@ var inject = require("gulp-inject");
 // TODO: var sassdoc = require('sassdoc');
 var fs = require('fs');
 
-var dir = './public_html/assets/';
+var dir = './public/assets/';
 var dir_css = dir + 'css/';
 var dir_sass = dir + 'sass/';
 var dir_js = dir + 'js/';
 var dir_maps = dir + 'maps/';
-var dir_html = './public_html/';
+var dir_html = './public/';
 
 fs.lstat(dir, (err) => {
   if (err)
@@ -75,14 +75,30 @@ gulp.task('lint', function () {
 gulp.task('sass', ['sasslint'], function () {
   return gulp.src([
             dir_sass + '*.s+(a|c)ss',
-            '!' + dir_sass + '/**/_*/'
+            '!' + dir_sass + '/**/_*/',
+            '!' + dir_sass + '/**/critical/'
           ])
           .pipe(print())
-          //.pipe(sourcemaps.init())
+          .pipe(sourcemaps.init())
           .pipe(sass({
             outputStyle: 'compressed' // Options: nested, expanded, compact, compressed
           }).on('error', sass.logError))
-          //.pipe(sourcemaps.write('../maps'))
+          .pipe(sourcemaps.write())
+          .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+          }))
+          .pipe(gulp.dest(dir_css));
+});
+
+gulp.task('sass_critical', ['sasslint'], function () {
+  return gulp.src([
+            dir_sass + 'critical.s+(a|c)ss'
+          ])
+          .pipe(print())
+          .pipe(sass({
+            outputStyle: 'compressed' // Options: nested, expanded, compact, compressed
+          }).on('error', sass.logError))
           .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
@@ -94,7 +110,7 @@ gulp.task('sass:watch', function () {
   gulp.watch(dir_sass + '**/*.s+(a|c)ss', ['sass']);
 });
 
-gulp.task('inject', ['sass'], function () {
+gulp.task('inject', ['sass_critical'], function () {
   gulp.src(dir_html + '*.html')
           .pipe(inject(gulp.src([dir_css + './critical.css']), {
             starttag: '<!-- inject:head:{{ext}} --><style>',
@@ -107,5 +123,5 @@ gulp.task('inject', ['sass'], function () {
           .pipe(gulp.dest(dir_html));
 });
 
-gulp.task('default', ['inject', 'lint'], function () {
+gulp.task('default', ['sass', 'inject', 'lint'], function () {
 });
