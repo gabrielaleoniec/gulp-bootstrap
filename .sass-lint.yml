@@ -1,0 +1,10 @@
+rules:
+  no-qualifying-elements:
+    - 1
+    -
+      allow-element-with-attribute: true
+      allow-element-with-class: true
+      allow-element-with-id: false
+  nesting-depth: 
+    - 1
+    - max-depth: 3

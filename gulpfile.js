@@ -46,7 +46,7 @@ gulp.task('sasslint', function () {
              'convention': 'camelcase'
              }
              },*/
-            configFile: './sass-lint.yml'
+            configFile: './.sass-lint.yml'
           }))
           .pipe(sassLint.format())
           .pipe(sassLint.failOnError());
