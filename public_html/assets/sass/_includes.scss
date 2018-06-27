@@ -9,7 +9,7 @@ $color-navy: #1e528e;
 $color-blue-grey: #5b7983;
 $color-light-grey: #f3f3f3;
 $color-middle-grey: #b0b0b0; //TODO: Ask David about the color #656565;
-$color-fuchsia: #d70458;
+$color-fuchsia: #d70055;
 
 // Strips units from the given property value
 // @param {String|Integer} $num Property in pixels with or without 'px'
@@ -56,4 +56,22 @@ $color-fuchsia: #d70458;
 
   #{$property}: $px-values;
   #{$property}: $rem-values;
+}
+
+@mixin fluid-type($properties, $min-vw, $max-vw, $min-value, $max-value) {
+  @each $property in $properties {
+    #{$property}: $min-value;
+  }
+
+  @media (min-width: $min-vw) {
+    @each $property in $properties {
+      #{$property}: calc(#{$min-value} + #{strip-unit($max-value - $min-value)} * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)});
+    }
+  }
+
+  @media (min-width: $max-vw) {
+    @each $property in $properties {
+      #{$property}: $max-value;
+    }
+  }
 }
